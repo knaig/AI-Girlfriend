@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Girlfriend</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        textarea {
+            width: 80%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #response {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>AI Girlfriend</h1>
+
+    <form id="chatForm">
+        <textarea id="userInput" name="human_input" placeholder="Enter your message"></textarea>
+        <button type="button" onclick="sendMessage()">Send</button>
+    </form>
+
+    <div id="response_message"></div>
+
+    <script>
+        const form = document.querySelector('#chatForm');
+        const responseMessage = document.getElementById('response_message');
+
+        function sendMessage() {
+            const formData = new FormData(form);
+            fetch('/sendMessage', {
+                method: 'POST',
+                body:formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                responseMessage.innerHTML = data;                                
+            });            
+            form.reset();
+        }
+    </script>
+
+</body>
+</html>
